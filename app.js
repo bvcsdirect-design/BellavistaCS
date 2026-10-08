@@ -10,8 +10,8 @@
   function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 
   function header(){
-    return '<div class="wrap"><a class="brand" href="chicago.html"><span class="mono">B</span><span class="t">Bellavista<small>Cabinet Supply · '+S.branch+'</small></span></a>'+
-      '<nav><a href="chicago.html#colors">Colors</a><a href="chicago.html#how">How it works</a><a href="chicago.html#contact">Contact</a><a class="call" href="tel:'+S.tel+'"><span>Call</span><span class="num"> '+S.phone+'</span></a></nav></div>';
+    return '<div class="wrap"><a class="brand" href="'+S.home+'"><span class="mono">B</span><span class="t">Bellavista<small>Cabinet Supply · '+S.branch+'</small></span></a>'+
+      '<nav><a href="'+S.home+'#colors">Colors</a><a href="'+S.home+'#how">How it works</a><a href="'+S.home+'#contact">Contact</a><a class="call" href="tel:'+S.tel+'"><span>Call</span><span class="num"> '+S.phone+'</span></a></nav></div>';
   }
   function buttons(extra, full){
     var msg = extra ? encodeURIComponent("Hi! I'm interested in the "+extra+" cabinet door.") : '';
@@ -28,16 +28,16 @@
     els.forEach(function(e){io.observe(e)});
   }
   function card(d){
-    return '<a class="card reveal" href="door.html?style='+d.slug+'"><div class="sw">'+(d.swatch?'<img loading="lazy" alt="'+esc(d.name)+' cabinet door" src="'+img(d.swatch,400)+'">':'<div class="tile" style="background:'+d.tone+'"><span>'+esc(d.code)+'</span></div>')+'<span class="view">View kitchen</span></div><h3>'+esc(d.name)+'</h3><small>'+esc(d.style)+'</small></a>';
+    return '<a class="card reveal" href="'+S.door+'?style='+d.slug+'"><div class="sw">'+(d.swatch?'<img loading="lazy" alt="'+esc(d.name)+' cabinet door" src="'+img(d.swatch,400)+'">':'<div class="tile" style="background:'+d.tone+'"><span>'+esc(d.code)+'</span></div>')+'<span class="view">View kitchen</span></div><h3>'+esc(d.name)+'</h3><small>'+esc(d.style)+'</small></a>';
   }
 
   /* ---------- catalog (home) ---------- */
   function home(){
-    var fam = ['All','White','Color','Wood','Dark','Glass'];
+    var fam = ['All','White','Color','Wood','Dark','Glass'].filter(function(f){return f==='All'||D.some(function(d){return d.family===f})});
     var labels = {All:'All colors',White:'Whites',Color:'Greys · Greens · Blues',Wood:'Woods',Dark:'Blacks',Glass:'Glass'};
     var strip = D.filter(function(d){return d.swatch}).slice(0,7).map(function(d){return '<img alt="" src="'+img(d.swatch,200)+'">'}).join('');
     $('#app').innerHTML =
-      '<section class="hero"><div class="wrap"><span class="eyebrow">Chicago · Cabinet Supply</span>'+
+      '<section class="hero"><div class="wrap"><span class="eyebrow">'+S.branch+' · Cabinet Supply</span>'+
       '<h1>Find the door that feels like <em>home.</em></h1>'+
       '<p class="lead">Browse every cabinet door we carry. Tap a color to see it in a finished kitchen, then call, text or email us and we\'ll take it from there.</p>'+
       '<div class="btns"><a class="btn solid" href="#colors">Browse colors</a><a class="btn" href="tel:'+S.tel+'">'+ICON.call+'Call '+S.phone+'</a></div></div>'+
@@ -51,9 +51,9 @@
       '<div class="step reveal"><b>3</b><h3>Contact us</h3><p>Call, text or email. We\'ll walk you through the rest of the process.</p></div></div></div></section>'+
       '<section class="contact" id="contact"><div class="wrap"><div class="sec-head reveal"><span class="eyebrow">Get in touch</span><h2>Let\'s plan your kitchen</h2><div class="rule"></div></div>'+
       '<div class="reveal" style="max-width:420px;margin:0 auto">'+buttons('',true)+'</div>'+
-      '<p class="info reveal"><a href="tel:'+S.tel+'">'+S.phone+'</a> · <a href="mailto:'+S.email+'">'+S.email+'</a><br><a href="'+S.maps+'" target="_blank" rel="noopener">'+S.address+'</a></p>'+
-      '<p class="alt reveal">Looking for our Miami branch? <a href="'+S.other.href+'">'+S.other.label+' →</a></p></div></section>'+
-      '<footer>© '+new Date().getFullYear()+' Bellavista Cabinet Supply · Chicago</footer>';
+      '<p class="info reveal"><a href="tel:'+S.tel+'">'+S.phone+'</a> · <a href="mailto:'+S.email+'">'+S.email+'</a>'+(S.address?'<br><a href="'+S.maps+'" target="_blank" rel="noopener">'+S.address+'</a>':'')+'</p>'+
+      '<p class="alt reveal">'+S.other.ask+' <a href="'+S.other.href+'">'+S.other.label+' →</a></p></div></section>'+
+      '<footer>© '+new Date().getFullYear()+' Bellavista Cabinet Supply · '+S.branch+'</footer>';
 
     function draw(f){
       var list = D.filter(function(d){return f==='All'||d.family===f});
@@ -72,7 +72,7 @@
   function door(){
     var slug = new URLSearchParams(location.search).get('style');
     var i = D.findIndex(function(d){return d.slug===slug});
-    if(i<0){location.replace('chicago.html#colors');return}
+    if(i<0){location.replace(S.home+'#colors');return}
     var d = D[i], prev = D[(i-1+D.length)%D.length], next = D[(i+1)%D.length];
     document.title = d.name+' Cabinet Door · Bellavista Cabinet Supply';
     var kit = d.kitchens, left;
@@ -84,7 +84,7 @@
     }
     var same = D.filter(function(x){return x.family===d.family && x.slug!==d.slug}).slice(0,5);
     $('#app').innerHTML =
-      '<div class="door"><div class="wrap"><a class="back" href="chicago.html#colors">← All colors</a>'+
+      '<div class="door"><div class="wrap"><a class="back" href="'+S.home+'#colors">← All colors</a>'+
       '<div class="door-grid"><div class="reveal">'+left+'</div>'+
       '<div class="info-card reveal"><div class="tags"><span class="tag">'+esc(d.style)+'</span><span class="tag">Code '+esc(d.code)+'</span></div>'+
       '<h1>'+esc(d.name)+'</h1><div class="rule" style="margin:16px 0 18px"></div>'+
@@ -92,9 +92,9 @@
       '<div class="mini">'+(d.swatch?'<img alt="'+esc(d.name)+' door" src="'+img(d.swatch,200)+'">':'<div class="tile" style="width:52px;aspect-ratio:8/15;border-radius:3px;background:'+d.tone+'"></div>')+'<span>Door sample · '+esc(d.name)+'<br>Photos are for reference. Colors vary slightly by screen.</span></div>'+
       buttons(d.name,true)+
       '<p class="cta-note">Interested in this door? Reach out and we\'ll go over sizes, pricing and next steps with you.</p>'+
-      '<div class="pn"><a href="door.html?style='+prev.slug+'">← '+esc(prev.name)+'</a><a href="door.html?style='+next.slug+'">'+esc(next.name)+' →</a></div></div></div>'+
+      '<div class="pn"><a href="'+S.door+'?style='+prev.slug+'">← '+esc(prev.name)+'</a><a href="'+S.door+'?style='+next.slug+'">'+esc(next.name)+' →</a></div></div></div>'+
       (same.length?'<div class="more"><h2>More in this group</h2><div class="grid">'+same.map(card).join('')+'</div></div>':'')+
-      '</div></div><footer>© '+new Date().getFullYear()+' Bellavista Cabinet Supply · Chicago</footer>';
+      '</div></div><footer>© '+new Date().getFullYear()+' Bellavista Cabinet Supply · '+S.branch+'</footer>';
     var th = $('#thumbs');
     if(th){
       th.addEventListener('click',function(e){

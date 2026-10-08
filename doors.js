@@ -643,5 +643,6 @@ window.SITE = {
   email: "Sales@bellavistacabinets.com",
   address: "4311 N Ravenswood Ave, Chicago, IL",
   maps: "https://www.google.com/maps/search/?api=1&query=4311+N+Ravenswood+Ave+Chicago+IL",
-  other: { label: "Bellavista Miami", href: "miami.html" }
+  home: "chicago.html", door: "door.html",
+  other: { ask: "Looking for our Miami branch?", label: "Bellavista Miami", href: "miami.html" }
 };
