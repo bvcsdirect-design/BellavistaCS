@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bellavista Cabinet Supply</title>
+<meta name="description" content="Choose your Bellavista Cabinet Supply location: Chicago or Miami.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#f4eee3;--cream-2:#ebe3d4;--ink:#1a1816;--ink-2:#5a534c;--crimson:#7a1f2e;--burgundy:#4f1220;--line:rgba(79,18,32,.18)}
+*{box-sizing:border-box;margin:0}
+body{min-height:100vh;background:var(--cream);color:var(--ink);font-family:Montserrat,system-ui,sans-serif;padding:24px 14px 44px;text-align:center;-webkit-font-smoothing:antialiased}
+.box{width:100%;max-width:1120px;margin:0 auto;animation:in .9s ease both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.logo{width:min(260px,64%);height:auto;display:block;margin:0 auto 16px}
+h1{font-family:'Playfair Display',Georgia,serif;font-weight:500;font-size:clamp(32px,6vw,56px);line-height:1.1;color:var(--burgundy);max-width:680px;margin:0 auto 10px}
+h1 em{color:var(--crimson)}
+.sub{max-width:520px;margin:0 auto 22px;color:var(--ink-2);font-size:15px;line-height:1.6}
+.frame{display:block;width:100%;background:#fbf8f1;padding:8px;border:1px solid var(--line);border-radius:12px;box-shadow:0 24px 44px -26px rgba(79,18,32,.45);margin:0 auto 26px;cursor:zoom-in;position:relative;font:inherit;color:inherit}
+.frame img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;background:var(--cream-2)}
+@media(min-width:700px){.frame{padding:10px}.frame img{aspect-ratio:16/9;max-height:58vh}}
+.frame .zoom{position:absolute;right:20px;bottom:20px;background:rgba(244,238,227,.92);color:var(--burgundy);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase}
+.frame:focus-visible{outline:2px solid var(--crimson);outline-offset:3px}
+.btns{display:grid;gap:10px;grid-template-columns:1fr;max-width:300px;margin:0 auto}
+@media(min-width:700px){.btns{grid-template-columns:repeat(3,1fr);max-width:620px}}
+a.btn{display:block;padding:13px 14px;border-radius:999px;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;transition:transform .3s,background .3s}
+a.s{background:var(--crimson);color:#fff}
+a.o{border:1.5px solid var(--crimson);color:var(--crimson)}
+a.btn:hover{transform:translateY(-2px)}
+a.s:hover{background:var(--burgundy)}
+a.c{border:1.5px dashed var(--crimson);color:var(--crimson);background:transparent}
+a.btn small{display:block;margin-top:3px;font-size:9px;letter-spacing:.14em;opacity:.85;font-weight:500}
+.foot{margin-top:26px;font-size:12px;color:var(--ink-2);letter-spacing:.06em}
+.foot a{color:var(--crimson);text-decoration:none}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(26,24,22,.94);display:flex;align-items:center;justify-content:center;padding:14px;cursor:zoom-out}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lb button{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(244,238,227,.5);background:rgba(26,24,22,.6);color:#f4eee3;font-size:26px;line-height:1;cursor:pointer}
+@media(prefers-reduced-motion:reduce){.box{animation:none}a.btn{transition:none}}
+</style></head><body>
+<div class="box">
+<img class="logo" src="logo.png" alt="Bellavista Cabinet Supply">
+<h1>Where the heart of home <em>comes together.</em></h1>
+<p class="sub">Choose your location to begin.</p>
+<button class="frame" id="open" type="button" aria-label="Enlarge kitchen photo"><img src="https://drive.google.com/thumbnail?id=1S2e2kF0tRHvYqfHbtVcpHIIZOpYK7QKu&amp;sz=w2000" alt="A finished kitchen with Bellavista cabinets"><span class="zoom">Tap to enlarge</span></button>
+<div class="btns">
+<a class="btn s" href="chicago.html">Main · Chicago<small>Browse all colors</small></a>
+<a class="btn o" href="miami.html">Miami<small>Browse Miami colors</small></a>
+<a class="btn c" href="texas.html">San Antonio<small>Coming soon</small></a>
+</div>
+<p class="foot">Chicago <a href="tel:+17737267752">773-726-7752</a> · Miami <a href="tel:+17867080472">786-708-0472</a></p>
+</div>
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Kitchen photo"><img id="lbimg" alt="A finished kitchen with Bellavista cabinets"><button type="button" id="lbx" aria-label="Close">&times;</button></div>
+<script>
+(function(){
+  var o=document.getElementById('open'),lb=document.getElementById('lb'),im=document.getElementById('lbimg'),x=document.getElementById('lbx');
+  var full='https://drive.google.com/thumbnail?id=1S2e2kF0tRHvYqfHbtVcpHIIZOpYK7QKu&sz=w2600';
+  function show(){im.src=full;lb.hidden=false;document.body.style.overflow='hidden';x.focus()}
+  function hide(){lb.hidden=true;document.body.style.overflow='';o.focus()}
+  o.addEventListener('click',show);
+  lb.addEventListener('click',hide);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden)hide()});
+})();
+</script>
+</body></html>
